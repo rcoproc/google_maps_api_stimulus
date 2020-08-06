@@ -1,0 +1,37 @@
+<%= form_with(model: product, local: true, data: { controller: 'validate', target: 'validate.form' }) do |form| %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, data: {  target: 'validate.input', 
+                                        validate: { 
+                                          presence: { message: '^Name is required' },
+                                          length: { minimum: 3, maximum: 30 }
+                                          }} %>
+  </div>
+
+
+  <div class="field">
+    <%= form.label :price %>
+    <%= form.text_field :price, data: {  target: 'validate.input', 
+                                         validate: { 
+                                           presence: true,
+                                           numericality: {
+                                             greaterThan: 0,
+                                             message: '^Do not give away for free!'
+                                         }}} %>
+  </div>
+
+
+  <div class="field">
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity, data: {  target: 'validate.input', 
+                                        validate: { 
+                                          presence: { message: '^is required' },
+                                          numericality: {
+                                            lessThan: 100,
+                                            message: '^# of Stock is too high'
+                                          }}} %>
+  </div>
+  <div class="actions">
+    <%= form.submit data: { action: 'validate#submitForm'} %>
+  </div>
+<% end %>
